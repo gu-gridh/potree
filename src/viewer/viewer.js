@@ -1160,12 +1160,14 @@ export class Viewer extends EventDispatcher{
 
 	toggleSidebar () {
 		let renderArea = $('#potree_render_area');
+		let sidebar = $('#potree_sidebar_container');
+		let sidebarWidth = sidebar.outerWidth() || 300;
 		let isVisible = renderArea.css('left') !== '0px';
 
 		if (isVisible) {
 			renderArea.css('left', '0px');
 		} else {
-			renderArea.css('left', '300px');
+			renderArea.css('left', `${sidebarWidth}px`);
 		}
 	};
 
@@ -1215,18 +1217,16 @@ export class Viewer extends EventDispatcher{
 			imgMenuToggle.onclick = this.toggleSidebar;
 			imgMenuToggle.classList.add('potree_menu_toggle');
 
-			let imgMapToggle = document.createElement('img');
-			imgMapToggle.src = new URL(Potree.resourcePath + '/icons/map_icon.png').href;
-			imgMapToggle.style.display = 'none';
-			imgMapToggle.onclick = e => { this.toggleMap(); };
-			imgMapToggle.id = 'potree_map_toggle';
-
-			
+			// let imgMapToggle = document.createElement('img');
+			// imgMapToggle.src = new URL(Potree.resourcePath + '/icons/map_icon.png').href;
+			// imgMapToggle.style.display = 'none';
+			// imgMapToggle.onclick = e => { this.toggleMap(); };
+			// imgMapToggle.id = 'potree_map_toggle';
 
 			let elButtons = $("#potree_quick_buttons").get(0);
 
 			elButtons.append(imgMenuToggle);
-			elButtons.append(imgMapToggle);
+			// elButtons.append(imgMapToggle);
 
 
 			VRButton.createButton(this.renderer).then(vrButton => {
@@ -1872,13 +1872,13 @@ export class Viewer extends EventDispatcher{
 
 		this.updateAnnotations();
 		
-		if(this.mapView){
-			this.mapView.update(delta);
-			if(this.mapView.sceneProjection){
-				$( "#potree_map_toggle" ).css("display", "block");
+		// if(this.mapView){
+		// 	this.mapView.update(delta);
+		// 	if(this.mapView.sceneProjection){
+		// 		$( "#potree_map_toggle" ).css("display", "block");
 				
-			}
-		}
+		// 	}
+		// }
 
 		TWEEN.update(timestamp);
 

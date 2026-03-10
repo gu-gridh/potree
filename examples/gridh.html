@@ -114,19 +114,19 @@
 					<h2>Tools</h2>
 					<div class="guide-instructions-item">
 						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/distance.svg')"></div>
-						<div class="guide-instructions-item-label">Distance tool</div>
+						<div class="guide-instructions-item-label"><p>Measure tool.</p> Use to measure distances. Click to place measure points, and right-click to finish.</div>
 					</div>
 					<div class="guide-instructions-item">
 						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/height.svg')"></div>
-						<div class="guide-instructions-item-label">Height tool</div>
+						<div class="guide-instructions-item-label"><p>Height tool.</p> Use to measure the height between two points. Click to place measure points.</div>
 					</div>
 					<div class="guide-instructions-item">
 						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/circle.svg')"></div>
-						<div class="guide-instructions-item-label">Radius tool</div>
+						<div class="guide-instructions-item-label"><p>Radius tool.</p> Use to measure the radius of a circle. Place two measure points by clicking and then adjust the shape by moving the pointer. Click when done.</div>
 					</div>
 					<div class="guide-instructions-item">
 						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/remove.svg')"></div>
-						<div class="guide-instructions-item-label">Clear</div>
+						<div class="guide-instructions-item-label"><p>Clear.</p> Clear away all measurements in the scene.</div>
 					</div>
 					<div class="module-acknowledgement">
 						<p>The module was created with</p>
@@ -260,7 +260,6 @@
 
 		viewer.loadGUI(() => {
 			viewer.setLanguage("en");
-			viewer.toggleSidebar();
 			viewer.setControls(viewer.fpControls);
 			viewer.renderer.domElement.focus();
 

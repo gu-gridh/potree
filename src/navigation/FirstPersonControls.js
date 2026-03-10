@@ -30,7 +30,7 @@ export class FirstPersonControls extends EventDispatcher {
 		this.sceneControls = new THREE.Scene();
 
 		this.rotationSpeed = 200;
-		this.moveSpeed = 2;
+		this.moveSpeed = 1.0;
 		this.lockElevation = false;
 
 		this.keys = {

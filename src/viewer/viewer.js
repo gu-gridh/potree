@@ -1161,13 +1161,16 @@ export class Viewer extends EventDispatcher{
 	toggleSidebar () {
 		let renderArea = $('#potree_render_area');
 		let sidebar = $('#potree_sidebar_container');
-		let sidebarWidth = sidebar.outerWidth() || 300;
-		let isVisible = renderArea.css('left') !== '0px';
+		let menuToggle = $('.potree_menu_toggle');
+		let sidebarWidth = sidebar.outerWidth() || 400;
+		let isVisible = renderArea.css('right') !== '0px';
 
 		if (isVisible) {
-			renderArea.css('left', '0px');
+			renderArea.css('right', '0px');
+			menuToggle.css('right', '30px');
 		} else {
-			renderArea.css('left', `${sidebarWidth}px`);
+			renderArea.css('right', `${sidebarWidth}px`);
+			menuToggle.css('right', `${sidebarWidth + 30}px`);
 		}
 	};
 
@@ -1207,9 +1210,11 @@ export class Viewer extends EventDispatcher{
 		}
 
 		let viewer = this;
+		$('#potree_render_area').css('right', '0px');
+		$('.potree_menu_toggle').css('right', '30px');
 		let sidebarContainer = $('#potree_sidebar_container');
 		sidebarContainer.load(new URL(Potree.scriptPath + '/sidebar.html').href, () => {
-			sidebarContainer.css('width', '300px');
+			sidebarContainer.css('width', '400px');
 			sidebarContainer.css('height', '100%');
 
 			let imgMenuToggle = document.createElement('img');

@@ -54,11 +54,12 @@
 #potree_sidebar_container{
 	position:	absolute;
 	z-index:	0;
-	width:		350px;
+	width:		400px;
 	height:		100%;
 	overflow-y:	scroll;
 	font-size:	85%;
-	border-right:	1px solid black;
+	right:		0px;
+	border-left:	1px solid black;
 	background-color:	var(--bg-color);
 }
 
@@ -142,14 +143,22 @@
 }
 
 .potree_menu_toggle{
+	display:		block;
+	position:		fixed;
 	float:			left;
-	margin:			0;
+	right:			30px;
+	top:			30px;
 	background:		none;
 	width:			2.5em;
 	height:			2.5em;
-	z-index:		100;
+	z-index:		100000;
 	cursor: 		pointer;
-	margin:			4px;
+	pointer-events:	auto;
+	opacity:		1.0;
+	scale:			1.0;
+	-webkit-transition: right .4s !important;
+	transition: right .5s !important;
+	will-change:	right;
 }
 
 #potree_map_toggle{
@@ -172,8 +181,9 @@
 	right: 		0px;
 	overflow: 	hidden;
 	z-index: 	1;
-	-webkit-transition: left .35s;
-	transition: left .35s;
+	-webkit-transition: right .4s !important;
+	transition: right .5s !important;
+	will-change:	right;
 }
 
 .potree-panel {

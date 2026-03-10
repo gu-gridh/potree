@@ -1554,7 +1554,6 @@ export class Sidebar {
 			}
 		)); */
 
-
 		elOrientation.append(this.createToolIcon(
 			Potree.resourcePath + "/icons/left.svg",
 			"[title]tt.left_view_control",

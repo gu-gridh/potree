@@ -195,11 +195,11 @@ export class Sidebar {
 			));  */
 
 
-		// AREA
-		elToolbarExtra.append(this.createToolIconExpanded(
-			Potree.resourcePath + '/icons/area.svg',
-			'Measure an area by drawing a polygon',
-			() => {
+			// AREA
+			elToolbarExtra.append(this.createToolIconExpanded(
+				'https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/area.svg',
+				'Measure an area by drawing a polygon',
+				() => {
 				$('#menu_measurements').next().slideDown();
 				let measurement = this.measuringTool.startInsertion({
 					showDistances: true,
@@ -215,11 +215,11 @@ export class Sidebar {
 			}
 		));
 
-		// VOLUME
-		elToolbarExtra.append(this.createToolIconExpanded(
-			Potree.resourcePath + '/icons/volume.svg',
-			'Measure an area volume with a cube',
-			() => {
+			// VOLUME
+			elToolbarExtra.append(this.createToolIconExpanded(
+				'https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/volume.svg',
+				'Measure an area volume with a cube',
+				() => {
 				let volume = this.volumeTool.startInsertion();
 
 				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");
@@ -1554,41 +1554,41 @@ export class Sidebar {
 			}
 		)); */
 
-		elOrientation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/left.svg",
-			"[title]tt.left_view_control",
-			() => {this.viewer.setLeftView()}
-		));
+			elOrientation.append(this.createToolIcon(
+				"https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/left.svg",
+				"[title]tt.left_view_control",
+				() => {this.viewer.setLeftView()}
+			));
 
-		elOrientation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/right.svg",
-			"[title]tt.right_view_control",
-			() => {this.viewer.setRightView()}
-		));
+			elOrientation.append(this.createToolIcon(
+				"https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/right.svg",
+				"[title]tt.right_view_control",
+				() => {this.viewer.setRightView()}
+			));
 
-		elOrientation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/front.svg",
-			"[title]tt.front_view_control",
-			() => {this.viewer.setFrontView()}
-		));
+			elOrientation.append(this.createToolIcon(
+				"https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/front.svg",
+				"[title]tt.front_view_control",
+				() => {this.viewer.setFrontView()}
+			));
 
-		elOrientation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/back.svg",
-			"[title]tt.back_view_control",
-			() => {this.viewer.setBackView()}
-		));
+			elOrientation.append(this.createToolIcon(
+				"https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/back.svg",
+				"[title]tt.back_view_control",
+				() => {this.viewer.setBackView()}
+			));
 
-		elOrientation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/top.svg",
-			"[title]tt.top_view_control",
-			() => {this.viewer.setTopView()}
-		));
+			elOrientation.append(this.createToolIcon(
+				"https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/top.svg",
+				"[title]tt.top_view_control",
+				() => {this.viewer.setTopView()}
+			));
 
-		elOrientation.append(this.createToolIcon(
-			Potree.resourcePath + "/icons/bottom.svg",
-			"[title]tt.bottom_view_control",
-			() => {this.viewer.setBottomView()}
-		));
+			elOrientation.append(this.createToolIcon(
+				"https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/bottom.svg",
+				"[title]tt.bottom_view_control",
+				() => {this.viewer.setBottomView()}
+			));
 	}
 
 	initSettings() {

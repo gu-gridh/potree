@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -112,20 +113,39 @@
 				<div id="guide-instructions-tools">
 					<h2>Tools</h2>
 					<div class="guide-instructions-item">
-						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/distance.svg')"></div>
-						<div class="guide-instructions-item-label"><p>Measure tool.</p> Use to measure distances. Click to place measure points, and right-click to finish.</div>
+						<div class="guide-instructions-item-icon"
+							style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/distance.svg')">
+						</div>
+						<div class="guide-instructions-item-label">
+							<p>Measure tool.</p> Use to measure distances. Click to place measure points, and
+							right-click to finish.
+						</div>
 					</div>
 					<div class="guide-instructions-item">
-						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/height.svg')"></div>
-						<div class="guide-instructions-item-label"><p>Height tool.</p> Use to measure the height between two points. Click to place measure points.</div>
+						<div class="guide-instructions-item-icon"
+							style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/height.svg')">
+						</div>
+						<div class="guide-instructions-item-label">
+							<p>Height tool.</p> Use to measure the height between two points. Click to place measure
+							points.
+						</div>
 					</div>
 					<div class="guide-instructions-item">
-						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/circle.svg')"></div>
-						<div class="guide-instructions-item-label"><p>Radius tool.</p> Use to measure the radius of a circle. Place two measure points by clicking and then adjust the shape by moving the pointer. Click when done.</div>
+						<div class="guide-instructions-item-icon"
+							style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/circle.svg')">
+						</div>
+						<div class="guide-instructions-item-label">
+							<p>Radius tool.</p> Use to measure the radius of a circle. Place two measure points by
+							clicking and then adjust the shape by moving the pointer. Click when done.
+						</div>
 					</div>
 					<div class="guide-instructions-item">
-						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/remove.svg')"></div>
-						<div class="guide-instructions-item-label"><p>Clear.</p> Clear away all measurements in the scene.</div>
+						<div class="guide-instructions-item-icon"
+							style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/remove.svg')">
+						</div>
+						<div class="guide-instructions-item-label">
+							<p>Clear.</p> Clear away all measurements in the scene.
+						</div>
 					</div>
 					<div class="module-acknowledgement">
 						<p>The module was created with</p>
@@ -146,7 +166,8 @@
 				</div>
 			</div>
 
-			<div class="ui-overlay-container" style="position:absolute; height:50px; bottom:55px; z-index:1000; color:white;">
+			<div class="ui-overlay-container"
+				style="position:absolute; height:50px; bottom:55px; z-index:1000; color:white;">
 				<div class="LODtool" id="point-sliders" style="width:330px;">
 					<div style="width:calc(50% - 10px); float:left; padding-right:10px;">
 						<span>Point size</span> <span id="lblPointSize"></span>
@@ -175,20 +196,25 @@
 			<div class="control-buttons">
 				<div class="control-buttons-group">
 					<button id="moveLeft" title="Move Left" style="border-radius:10px 0px 0px 10px; margin-right:0px;">
-						<img src="build/potree/resources/icons/movement.svg" alt="Move Left" style="transform:rotate(-90deg);">
+						<img src="build/potree/resources/icons/movement.svg" alt="Move Left"
+							style="transform:rotate(-90deg);">
 					</button>
 				</div>
 				<div class="control-buttons-group">
-					<button id="moveForward" title="Move Forward" style="border-radius:10px 10px 0px 0px; border-width:0 0 0px 0; border-style:dashed; border-color:grey; margin-bottom:0px;">
+					<button id="moveForward" title="Move Forward"
+						style="border-radius:10px 10px 0px 0px; border-width:0 0 0px 0; border-style:dashed; border-color:grey; margin-bottom:0px;">
 						<img src="build/potree/resources/icons/movement.svg" alt="Move Forward">
 					</button>
-					<button id="moveBackward" title="Move Backward" style="border-radius:0% 0% 0px 0px; border-width: 0.0px 0px 0px 0px;">
-						<img src="build/potree/resources/icons/movement.svg" alt="Move Backward" style="transform:rotate(180deg);">
+					<button id="moveBackward" title="Move Backward"
+						style="border-radius:0% 0% 0px 0px; border-width: 0.0px 0px 0px 0px;">
+						<img src="build/potree/resources/icons/movement.svg" alt="Move Backward"
+							style="transform:rotate(180deg);">
 					</button>
 				</div>
 				<div class="control-buttons-group">
 					<button id="moveRight" title="Move Right" style="border-radius:0px 10px 10px 0px; margin-left:0px;">
-						<img src="build/potree/resources/icons/movement.svg" alt="Move Right" style="transform:rotate(90deg);">
+						<img src="build/potree/resources/icons/movement.svg" alt="Move Right"
+							style="transform:rotate(90deg);">
 					</button>
 				</div>
 			</div>
@@ -223,19 +249,19 @@
 				event.preventDefault();
 				const inputEl = viewer.renderer.domElement;
 				inputEl.focus();
-				inputEl.dispatchEvent(new KeyboardEvent("keydown", {keyCode, which: keyCode, bubbles: true}));
+				inputEl.dispatchEvent(new KeyboardEvent("keydown", { keyCode, which: keyCode, bubbles: true }));
 			};
 			const up = event => {
 				event.preventDefault();
 				const inputEl = viewer.renderer.domElement;
-				inputEl.dispatchEvent(new KeyboardEvent("keyup", {keyCode, which: keyCode, bubbles: true}));
+				inputEl.dispatchEvent(new KeyboardEvent("keyup", { keyCode, which: keyCode, bubbles: true }));
 			};
 
 			button.addEventListener("mousedown", down);
 			button.addEventListener("mouseup", up);
 			button.addEventListener("mouseleave", up);
-			button.addEventListener("touchstart", down, {passive: false});
-			button.addEventListener("touchend", up, {passive: false});
+			button.addEventListener("touchstart", down, { passive: false });
+			button.addEventListener("touchend", up, { passive: false });
 		}
 
 		function updatePointBudgetLabel(value) {
@@ -273,7 +299,7 @@
 			viewer.addEventListener("point_budget_changed", () => {
 				const budget = viewer.getPointBudget();
 				updatePointBudgetLabel(budget);
-				$("#sldPointBudget").slider({value: budget});
+				$("#sldPointBudget").slider({ value: budget });
 			});
 
 			$("#sldPointSize").slider({
@@ -289,7 +315,7 @@
 			updatePointSizeLabel(0.8);
 		});
 
-		Potree.loadPointCloud("https://data.dh.gu.se/etruscan/modelviewer/cariatidi_pointcloud/cloud.js", "cariatidi_pointcloud", e => {
+		Potree.loadPointCloud("https://data.dh.gu.se/saintsophia/pointcloud/cloud.js", "Saint Sophia", e => {
 			const pointcloud = e.pointcloud;
 			const material = pointcloud.material;
 			material.size = 0.8;
@@ -297,7 +323,18 @@
 			material.shape = Potree.PointShape.CIRCLE;
 
 			viewer.scene.addPointCloud(pointcloud);
-			viewer.fitToScreen();
+			
+
+			/*  The intital position of the camera: x, z, y. 
+			You can get this position from the camera in the viewer */
+			viewer.scene.view.position.set(-24.686, -7.684, 0.282);
+
+			/*  The direction of the camera: x, z, y.  
+			You can get this direction from the camera in the viewer */
+			viewer.scene.view.lookAt(-6.537, 10.392, 5.940);
+			
+			/* Set the initial view to fit the entire pointcloud by un-commenting the line below */
+			//viewer.fitToScreen();
 		});
 
 		addControlButtonEventListeners("moveForward", "W");
@@ -310,4 +347,5 @@
 		hideGuide();
 	</script>
 </body>
+
 </html>

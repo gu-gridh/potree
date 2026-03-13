@@ -31,7 +31,7 @@ Use the `npm start` command to
 * watch for changes to the source code and automatically create a new build on change
 * start a web server at localhost:1234. 
 
-Go to http://localhost:1234/examples/ to test the example.
+Go to http://localhost:1234/ to test the example.
 
 Edit this line in index.html to change the pointcloud.
 ![Change pointcloud](./resources/Readme/screenshot1.png)

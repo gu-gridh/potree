@@ -1,14 +1,313 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="refresh" content="0; url=/examples/gridh.html">
-	<title>Redirecting...</title>
-	<script>
-		window.location.replace("/examples/gridh.html");
-	</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>GRIDH Pointcloud Viewer</title>
+
+	<link rel="stylesheet" href="resources/oswald_font.css">
+	<link rel="stylesheet" href="resources/barlow_font.css">
+	<link rel="stylesheet" type="text/css" href="build/potree/potree.css">
+	<link rel="stylesheet" type="text/css" href="libs/jquery-ui/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="libs/openlayers3/ol.css">
+	<link rel="stylesheet" type="text/css" href="libs/spectrum/spectrum.css">
+	<link rel="stylesheet" type="text/css" href="libs/jstree/themes/mixed/style.css">
+	<link rel="stylesheet" href="resources/css/shared_styles.css">
+	<link rel="stylesheet" href="resources/css/guide.css">
+	<link rel="stylesheet" href="resources/css/pointcloud.css">
+
+	<style>
+		.control-buttons {
+			position: absolute;
+			bottom: 135px;
+			left: calc(50% - 85px);
+			width: 160px;
+			z-index: 1;
+			user-select: none;
+			-webkit-user-select: none;
+			display: flex;
+			flex-direction: row;
+			align-items: flex-end;
+			pointer-events: none;
+		}
+
+		@media (max-width: 550px) {
+			#instructions {
+				display: none;
+			}
+		}
+
+		.control-buttons-group {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.control-buttons button {
+			border: 0;
+			cursor: pointer;
+			width: 60px;
+			height: 32px;
+			user-select: none;
+			-webkit-user-select: none;
+			background-color: rgba(0, 0, 0, 0.40);
+			pointer-events: auto;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.control-buttons img {
+			width: 25px;
+			height: 25px;
+			opacity: 1;
+		}
+
+		.control-buttons button:hover {
+			background-color: rgba(0, 0, 0, 0.70);
+		}
+
+		#tools {
+			display: flex;
+			justify-content: center;
+			width: 240px;
+			float: left;
+			align-items: center;
+			height: 45px;
+			gap: 10px;
+		}
+
+		#quality {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100px;
+			float: left;
+			margin-top: 8px;
+			height: 35px;
+		}
+	</style>
 </head>
+
 <body>
-	Redirecting to <a href="/examples/gridh.html">/examples/gridh.html</a>...
+	<script src="libs/jquery/jquery-3.1.1.min.js"></script>
+	<script src="libs/spectrum/spectrum.js"></script>
+	<script src="libs/jquery-ui/jquery-ui.min.js"></script>
+	<script src="libs/other/BinaryHeap.js"></script>
+	<script src="libs/tween/tween.min.js"></script>
+	<script src="libs/d3/d3.js"></script>
+	<script src="libs/proj4/proj4.js"></script>
+	<script src="libs/openlayers3/ol.js"></script>
+	<script src="libs/i18next/i18next.js"></script>
+	<script src="libs/jstree/jstree.js"></script>
+	<script src="build/potree/potree.js"></script>
+	<script src="libs/plasio/js/laslaz.js"></script>
+
+	<div id="guide" onclick="hideGuide()">
+		<div class="guide-content">
+			<div class="guide-instructions">
+				<div class="guide-instructions-intro" id="guide-intro"></div>
+				<div id="guide-instructions-tools">
+					<h2>Tools</h2>
+					<div class="guide-instructions-item">
+						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/distance.svg')"></div>
+						<div class="guide-instructions-item-label"><p>Measure tool.</p> Use to measure distances. Click to place measure points, and right-click to finish.</div>
+					</div>
+					<div class="guide-instructions-item">
+						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/height.svg')"></div>
+						<div class="guide-instructions-item-label"><p>Height tool.</p> Use to measure the height between two points. Click to place measure points.</div>
+					</div>
+					<div class="guide-instructions-item">
+						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/circle.svg')"></div>
+						<div class="guide-instructions-item-label"><p>Radius tool.</p> Use to measure the radius of a circle. Place two measure points by clicking and then adjust the shape by moving the pointer. Click when done.</div>
+					</div>
+					<div class="guide-instructions-item">
+						<div class="guide-instructions-item-icon" style="background-image:url('https://saintsophia.dh.gu.se/viewer/modules/pointcloud/build/potree/resources/icons/remove.svg')"></div>
+						<div class="guide-instructions-item-label"><p>Clear.</p> Clear away all measurements in the scene.</div>
+					</div>
+					<div class="module-acknowledgement">
+						<p>The module was created with</p>
+						<p><a href="https://github.com/potree/potree" target="_blank">Potree</a></p>
+					</div>
+					<div class="guide-closer">Close</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="potree_container" style="position: relative; width: 100%; height: 100%; left: 0; top: 0;">
+		<div id="potree_render_area" style="background-color:var(--viewer-bg)">
+			<div class="ui-overlay-container" style="position:absolute; bottom:20px; z-index:1000 !important;">
+				<div id="instructions" style="width:340px;">
+					<div class="instruction-closer" onclick="$('#instructions').hide();"></div>
+					<div id="instruction-text">Use mouse to navigate. Scroll to zoom. Double click to focus.</div>
+				</div>
+			</div>
+
+			<div class="ui-overlay-container" style="position:absolute; height:50px; bottom:55px; z-index:1000; color:white;">
+				<div class="LODtool" id="point-sliders" style="width:330px;">
+					<div style="width:calc(50% - 10px); float:left; padding-right:10px;">
+						<span>Point size</span> <span id="lblPointSize"></span>
+						<div id="sldPointSize"></div>
+					</div>
+					<div style="width:calc(50% - 10px); float:left; padding-left:10px;">
+						<span>Max points</span> <span id="lblPointBudget"></span>
+						<div id="sldPointBudget"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="interface-area">
+				<div class="toolbar-bottom" style="width:350px;">
+					<div id="tools"></div>
+					<div id="quality">
+						<selectgroup id="splat_quality_options_custom" style="width:100px;">
+							<option id="splat_quality_options_standard" value="standard">LQ</option>
+							<option id="splat_quality_options_hq" value="hq">HQ</option>
+						</selectgroup>
+					</div>
+				</div>
+				<div class="guide-button compact" title="User Guide" onclick="showGuide()">?</div>
+			</div>
+
+			<div class="control-buttons">
+				<div class="control-buttons-group" style="">
+					<button id="moveLeft" title="Move Left" style="border-radius:10px 0px 0px 10px; margin-right:0px;">
+						<img src="build/potree/resources/icons/movement.svg" alt="Move Left" style="transform:rotate(-90deg);">
+					</button>
+				</div>
+				<div class="control-buttons-group" style="">
+					<button id="moveForward" title="Move Forward" style="border-radius:10px 10px 0px 0px; border-width:0 0 0px 0; border-style:dashed; border-color:grey; margin-bottom:0px;">
+						<img src="build/potree/resources/icons/movement.svg" alt="Move Forward">
+					</button>
+					<button id="moveBackward" title="Move Backward" style="border-radius:0% 0% 0px 0px; border-width: 0.0px 0px 0px 0px;">
+						<img src="build/potree/resources/icons/movement.svg" alt="Move Backward" style="transform:rotate(180deg);">
+					</button>
+				</div>
+				<div class="control-buttons-group" style="">
+					<button id="moveRight" title="Move Right" style="border-radius:0px 10px 10px 0px; margin-left:0px;">
+						<img src="build/potree/resources/icons/movement.svg" alt="Move Right" style="transform:rotate(90deg);">
+					</button>
+				</div>
+			</div>
+		</div>
+		<div id="potree_sidebar_container" style="background-color:var(--sidebar-bg)"></div>
+	</div>
+
+	<script>
+		const labels = {
+			pointBudget: document.getElementById("lblPointBudget"),
+			pointSize: document.getElementById("lblPointSize"),
+		};
+
+		function showGuide() {
+			$("#instructions").css("transform", "scale(0.0)");
+			$("#guide").css("pointer-events", "auto");
+			$("#guide").css("opacity", "1.0");
+			$("#guide-instructions-tools").css("transform", "scale(1.0)");
+		}
+
+		function hideGuide() {
+			$("#guide").css("pointer-events", "none");
+			$("#guide").css("opacity", "0.0");
+			$("#guide-instructions-tools").css("transform", "scale(0.5)");
+			$("#instructions").css("transform", "scale(1.0)");
+		}
+
+		function addControlButtonEventListeners(id, key) {
+			const button = document.getElementById(id);
+			const keyCode = key.charCodeAt(0);
+			const down = event => {
+				event.preventDefault();
+				const inputEl = viewer.renderer.domElement;
+				inputEl.focus();
+				inputEl.dispatchEvent(new KeyboardEvent("keydown", {keyCode, which: keyCode, bubbles: true}));
+			};
+			const up = event => {
+				event.preventDefault();
+				const inputEl = viewer.renderer.domElement;
+				inputEl.dispatchEvent(new KeyboardEvent("keyup", {keyCode, which: keyCode, bubbles: true}));
+			};
+
+			button.addEventListener("mousedown", down);
+			button.addEventListener("mouseup", up);
+			button.addEventListener("mouseleave", up);
+			button.addEventListener("touchstart", down, {passive: false});
+			button.addEventListener("touchend", up, {passive: false});
+		}
+
+		function updatePointBudgetLabel(value) {
+			labels.pointBudget.textContent = (value / 1_000_000).toFixed(1) + "M";
+		}
+
+		function updatePointSizeLabel(value) {
+			labels.pointSize.textContent = Number(value).toFixed(1);
+		}
+
+		window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
+		viewer.setMinNodeSize(0);
+		viewer.setEDLEnabled(true);
+		viewer.setEDLRadius(1.2);
+		viewer.setEDLStrength(0.0);
+		viewer.setFOV(40);
+		viewer.setPointBudget(4_000_000);
+		viewer.loadSettingsFromURL();
+		viewer.setBackground("none");
+		viewer.setDescription("");
+
+		viewer.loadGUI(() => {
+			viewer.setLanguage("en");
+			viewer.setControls(viewer.fpControls);
+			viewer.renderer.domElement.focus();
+
+			$("#sldPointBudget").slider({
+				value: viewer.getPointBudget(),
+				min: 100_000,
+				max: 10_000_000,
+				step: 100_000,
+				slide: (event, ui) => viewer.setPointBudget(ui.value)
+			});
+			updatePointBudgetLabel(viewer.getPointBudget());
+			viewer.addEventListener("point_budget_changed", () => {
+				const budget = viewer.getPointBudget();
+				updatePointBudgetLabel(budget);
+				$("#sldPointBudget").slider({value: budget});
+			});
+
+			$("#sldPointSize").slider({
+				value: 0.8,
+				min: 0.1,
+				max: 3.0,
+				step: 0.1,
+				slide: (event, ui) => {
+					viewer.scene.pointclouds.forEach(pc => pc.material.size = ui.value);
+					updatePointSizeLabel(ui.value);
+				}
+			});
+			updatePointSizeLabel(0.8);
+		});
+
+		Potree.loadPointCloud("https://data.dh.gu.se/etruscan/modelviewer/cariatidi_pointcloud/cloud.js", "cariatidi_pointcloud", e => {
+			const pointcloud = e.pointcloud;
+			const material = pointcloud.material;
+			material.size = 0.8;
+			material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
+			material.shape = Potree.PointShape.CIRCLE;
+
+			viewer.scene.addPointCloud(pointcloud);
+			viewer.fitToScreen();
+		});
+
+		addControlButtonEventListeners("moveForward", "W");
+		addControlButtonEventListeners("moveBackward", "S");
+		addControlButtonEventListeners("moveLeft", "A");
+		addControlButtonEventListeners("moveRight", "D");
+
+		document.getElementById("guide-intro").textContent = "Use tools to measure and inspect the point cloud.";
+		setTimeout(() => $("#instructions").css("transform", "scale(0.0)"), 14000);
+		hideGuide();
+	</script>
 </body>
 </html>

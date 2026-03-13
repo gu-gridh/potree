@@ -34,4 +34,4 @@ Use the `npm start` command to
 Go to http://localhost:1234/examples/ to test the example.
 
 Edit this line in index.html to change the pointcloud.
-![Change pointcloud](./assets/Readme/screenshot1.png)
+![Change pointcloud](./resources/Readme/screenshot1.png)

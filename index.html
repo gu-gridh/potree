@@ -315,7 +315,7 @@
 			updatePointSizeLabel(0.8);
 		});
 
-		Potree.loadPointCloud("https://data.dh.gu.se/saintsophia/pointcloud/cloud.js", "Saint Sophia", e => {
+		Potree.loadPointCloud("https://data.dh.gu.se/pointclouds/dubbhallsmall/cloud.js", "Per Dubb", e => {
 			const pointcloud = e.pointcloud;
 			const material = pointcloud.material;
 			material.size = 0.8;
@@ -327,11 +327,11 @@
 
 			/*  The intital position of the camera: x, z, y. 
 			You can get this position from the camera in the viewer */
-			viewer.scene.view.position.set(-24.686, -7.684, 0.282);
+			viewer.scene.view.position.set(-2.000, -2.570, -0.050);
 
 			/*  The direction of the camera: x, z, y.  
 			You can get this direction from the camera in the viewer */
-			viewer.scene.view.lookAt(-6.537, 10.392, 5.940);
+			viewer.scene.view.lookAt(0.227, 0.259, -0.027);
 			
 			/* Set the initial view to fit the entire pointcloud by un-commenting the line below */
 			//viewer.fitToScreen();
